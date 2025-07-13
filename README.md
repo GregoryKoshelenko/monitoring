@@ -22,6 +22,11 @@
 
 1. Додайте джерела даних Prometheus та Loki у Grafana.
 2. Імпортуйте демо-дешборд (ID: 1860 для Prometheus, ID: 13639 для Loki).
+3. Приклад для метрик: [https://grafana.com/grafana/dashboards/1860](https://grafana.com/grafana/dashboards/1860)
+4. Приклад для логів: [https://grafana.com/grafana/dashboards/13639](https://grafana.com/grafana/dashboards/13639)
+
+> ![Demo Dashboard Prometheus](https://grafana.com/api/dashboards/1860/images/preview)
+> ![Demo Dashboard Loki](https://grafana.com/api/dashboards/13639/images/preview)
 
 ## Проект інструментовано з наскрізним TraceID
 
