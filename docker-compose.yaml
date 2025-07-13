@@ -1,0 +1,44 @@
+version: '3.8'
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    depends_on:
+      - prometheus
+      - loki
+
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+
+  fluentbit:
+    image: fluent/fluent-bit:latest
+    volumes:
+      - ./fluentbit/fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf
+    depends_on:
+      - loki
+
+  otel-collector:
+    image: otel/opentelemetry-collector:latest
+    command: ["--config", "/otel-config.yaml"]
+    volumes:
+      - ./otel/otel-config.yaml:/otel-config.yaml
+    ports:
+      - "4317:4317"
+      - "4318:4318"
+
+networks:
+  default:
+    driver: bridge
